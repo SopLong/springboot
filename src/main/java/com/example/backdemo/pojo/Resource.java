@@ -1,4 +1,4 @@
-package com.example.backdemo.domain;
+package com.example.backdemo.pojo;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;

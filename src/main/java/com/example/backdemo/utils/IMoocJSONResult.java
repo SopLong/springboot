@@ -1,4 +1,4 @@
-package com.example.backdemo.domain;
+package com.example.backdemo.utils;
 
 import java.util.List;
 
