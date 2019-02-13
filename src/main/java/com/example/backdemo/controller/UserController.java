@@ -22,6 +22,7 @@ public class UserController {
     public IMoocJSONResult hello(){
        Resource bean = new Resource();
         BeanUtils.copyProperties(resource,bean);
-        return IMoocJSONResult.ok(bean);
+        throw new RuntimeException("1111");
+//        return IMoocJSONResult.ok(bean);
     }
 }
