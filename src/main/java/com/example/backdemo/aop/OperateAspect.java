@@ -1,6 +1,7 @@
 package com.example.backdemo.aop;
 
 import com.example.backdemo.annotation.Mylog;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.aspectj.lang.reflect.MethodSignature;
@@ -10,32 +11,33 @@ import java.lang.reflect.Method;
 
 @Aspect
 @Component
+@Slf4j
 public class  OperateAspect {
     @Pointcut("@annotation(com.example.backdemo.annotation.Mylog)")
     private void cut(){
-        System.out.println("3");
+        log.debug("3");
     }
     // 开始环绕   
     @Around("cut()")
     public void around(ProceedingJoinPoint joinPoint)throws Throwable{
-        System.out.println("1");
+        log.debug("1");
         MethodSignature sign =  (MethodSignature)joinPoint.getSignature();
         Method method = sign.getMethod();
         Mylog annotation = method.getAnnotation(Mylog.class);
-        System.out.println(annotation.value());
+        log.debug(annotation.value());
         try{joinPoint.proceed();
         }catch (Exception e){
             e.printStackTrace();
         }
-        System.out.println("4");
+        log.debug("4");
     }
     @Before("cut()")
     public void before(){
-        System.out.println("2");
+        log.debug("2");
     }
     @After("cut()")
     public void after(){
-        System.out.println("5");
+        log.debug("5");
     }
 
 }
