@@ -1,5 +1,6 @@
 package com.example.backdemo.controller;
 
+import com.example.backdemo.annotation.Mylog;
 import com.example.backdemo.utils.IMoocJSONResult;
 import com.example.backdemo.pojo.Resource;
 import org.springframework.beans.BeanUtils;
@@ -14,11 +15,10 @@ public class UserController {
     private Resource resource;
 
     @RequestMapping("/hello")
+    @Mylog("ssss")
     public IMoocJSONResult hello(){
        Resource bean = new Resource();
         BeanUtils.copyProperties(resource,bean);
-        int id;
-        id = 1/0;
         return IMoocJSONResult.ok(bean);
     }
 }

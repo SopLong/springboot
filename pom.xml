@@ -108,6 +108,11 @@
             <artifactId>lombok</artifactId>
             <version>1.16.6</version>
         </dependency>
+        <!--自定义注解需要引入的依赖-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
