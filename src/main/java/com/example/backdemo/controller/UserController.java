@@ -15,7 +15,7 @@ public class UserController {
     private Resource resource;
 
     @RequestMapping("/hello")
-    @Mylog("ssss")
+//    @Mylog("ssss")
     public IMoocJSONResult hello(){
        Resource bean = new Resource();
         BeanUtils.copyProperties(resource,bean);
