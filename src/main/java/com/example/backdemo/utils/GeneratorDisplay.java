@@ -1,37 +1,79 @@
 package com.example.backdemo.utils;
 
-import org.mybatis.generator.api.MyBatisGenerator;
-import org.mybatis.generator.config.Configuration;
-import org.mybatis.generator.config.xml.ConfigurationParser;
-import org.mybatis.generator.internal.DefaultShellCallback;
+import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
+import com.baomidou.mybatisplus.generator.config.GlobalConfig;
+import com.baomidou.mybatisplus.generator.config.PackageConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.rules.DbType;
+import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GeneratorDisplay {
-    public void generator() throws Exception{
+    /**
+     *
+     * @Title: main
+     * @Description: 生成
+     * @param args
+     */
+    public static void main(String[] args) {
+        AutoGenerator mpg = new AutoGenerator();
 
-        List<String> warnings = new ArrayList<String>();
-        boolean overwrite = true;
-        //指定 逆向工程配置文件
-        File configFile = new File("generatorConfig.xml");
-        ConfigurationParser cp = new ConfigurationParser(warnings);
-        Configuration config = cp.parseConfiguration(configFile);
-        DefaultShellCallback callback = new DefaultShellCallback(overwrite);
-        MyBatisGenerator myBatisGenerator = new MyBatisGenerator(config,
-                callback, warnings);
-        myBatisGenerator.generate(null);
+        // 全局配置
+        GlobalConfig gc = new GlobalConfig();
+        gc.setOutputDir("D://");//输出文件路径
+        gc.setFileOverride(true);
+        gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
+        gc.setEnableCache(false);// XML 二级缓存
+        gc.setBaseResultMap(true);// XML ResultMap
+        gc.setBaseColumnList(false);// XML columList
+        gc.setAuthor("yux");// 作者
 
-    }
+        // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        gc.setControllerName("%sController");
+        gc.setServiceName("%sService");
+        gc.setServiceImplName("%sServiceImpl");
+        gc.setMapperName("%sMapper");
+        gc.setXmlName("%sMapper");
+        mpg.setGlobalConfig(gc);
 
-    public static void main(String[] args) throws Exception {
-        try {
-            GeneratorDisplay generatorSqlmap = new GeneratorDisplay();
-            generatorSqlmap.generator();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        // 数据源配置
+        DataSourceConfig dsc = new DataSourceConfig();
+        dsc.setDbType(DbType.MYSQL);
+        dsc.setDriverName("com.mysql.cj.jdbc.Driver");
+        dsc.setUsername("root");
+        dsc.setPassword("root");
+        dsc.setUrl("jdbc:mysql://localhost:3306/user");
+        mpg.setDataSource(dsc);
+
+        // 策略配置
+        StrategyConfig strategy = new StrategyConfig();
+        // strategy.setTablePrefix(new String[] { "sys_" });// 此处可以修改为您的表前缀
+        strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
+        strategy.setInclude(new String[] { "sys_user" }); // 需要生成的表
+
+        strategy.setSuperServiceClass(null);
+        strategy.setSuperServiceImplClass(null);
+        strategy.setSuperMapperClass(null);
+
+        mpg.setStrategy(strategy);
+
+        // 包配置
+        PackageConfig pc = new PackageConfig();
+        pc.setParent("com.example.demo");
+        pc.setController("controller");
+        pc.setService("service");
+        pc.setServiceImpl("service.impl");
+        pc.setMapper("dao");
+        pc.setEntity("pojo");
+        pc.setXml("mapper");
+        mpg.setPackageInfo(pc);
+
+        // 执行生成
+        mpg.execute();
 
     }
 }
