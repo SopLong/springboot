@@ -8,11 +8,7 @@ import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-
-public class GeneratorDisplay {
+public class CodeGeneration {
     /**
      *
      * @Title: main
@@ -24,7 +20,7 @@ public class GeneratorDisplay {
 
         // 全局配置
         GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir("D://");//输出文件路径
+        gc.setOutputDir("D://code/");//输出文件路径
         gc.setFileOverride(true);
         gc.setActiveRecord(false);// 不需要ActiveRecord特性的请改为false
         gc.setEnableCache(false);// XML 二级缓存
@@ -63,11 +59,11 @@ public class GeneratorDisplay {
 
         // 包配置
         PackageConfig pc = new PackageConfig();
-        pc.setParent("com.example.demo");
+        pc.setParent("com.example.backdemo");
         pc.setController("controller");
         pc.setService("service");
         pc.setServiceImpl("service.impl");
-        pc.setMapper("dao");
+        pc.setMapper("mapper");
         pc.setEntity("pojo");
         pc.setXml("mapper");
         mpg.setPackageInfo(pc);
