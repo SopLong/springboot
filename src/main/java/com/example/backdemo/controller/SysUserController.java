@@ -34,21 +34,21 @@ public class SysUserController {
     @PostMapping("add")
     @Transactional(propagation = Propagation.REQUIRED)
     public IMoocJSONResult add(){
-        SysUser sysUser = new SysUser();
-        sysUser.setName("wangwu");
-        sysUser.setAge(18);
-        sysUser.setBirthday(new Date());
-        sysUserService.insert(sysUser);
-        int i = 1/0;
+//        SysUser sysUser = new SysUser();
+//        sysUser.setName("wangwu");
+//        sysUser.setAge(18);
+//        sysUser.setBirthday(new Date());
+//        sysUserService.insert(sysUser);
+//        int i = 1/0;
         return new IMoocJSONResult();
     }
 
     @PostMapping("update")
     public IMoocJSONResult update(){
-        SysUser sysUser = new SysUser();
-        sysUser.setAge(20);
-        sysUser.setBirthday(new Date());
-        sysUserService.update(sysUser,new EntityWrapper<SysUser>().eq("name","张三"));
+//        SysUser sysUser = new SysUser();
+//        sysUser.setAge(20);
+//        sysUser.setBirthday(new Date());
+//        sysUserService.update(sysUser,new EntityWrapper<SysUser>().eq("name","张三"));
         return new IMoocJSONResult();
     }
 

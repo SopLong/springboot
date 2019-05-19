@@ -11,7 +11,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @MapperScan(basePackages = "com.example.backdemo.mapper")
 //扫描所需要的包，包含一些自用的工具类包，所在的路径
-@ComponentScan(basePackages = "com.example.backdemo")
+@ComponentScan(basePackages = "com.example. backdemo")
 public class BackDemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(BackDemoApplication.class, args);

@@ -2,56 +2,40 @@ package com.example.backdemo.pojo;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableName;
+import lombok.Data;
+
 import java.io.Serializable;
 
-/**
- * <p>
- * 
- * </p>
- *
- * @author yux123
- * @since 2019-02-16
- */
-@TableName("sys_user")
+@TableName("users")
+@Data
 public class SysUser implements Serializable {
-
-    private static final long serialVersionUID = 1L;
-
+    private Integer id;
+    /**
+     * 学号
+     */
+    private String userName;
+    /**
+     * 姓名
+     */
     private String name;
+    /**
+     * 性别
+     */
+    private String gender;
+    /**
+     * 年龄
+     */
     private Integer age;
+    /**
+     * 出生日期
+     */
     private Date birthday;
-
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Integer getAge() {
-        return age;
-    }
-
-    public void setAge(Integer age) {
-        this.age = age;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
-
-    @Override
-    public String toString() {
-        return "SysUser{" +
-        "name=" + name +
-        ", age=" + age +
-        ", birthday=" + birthday +
-        "}";
-    }
+    /**
+     * 密码
+     */
+    private String password;
+    /**
+     * 角色
+     */
+    private Integer role;
 }
