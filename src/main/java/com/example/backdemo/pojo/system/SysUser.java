@@ -1,10 +1,13 @@
-package com.example.backdemo.pojo;
+package com.example.backdemo.pojo.system;
 
 import java.util.Date;
+
+import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
 @TableName("users")
 @Data
@@ -34,8 +37,14 @@ public class SysUser implements Serializable {
      * 密码
      */
     private String password;
+    @TableField(exist = false)
+    private List<String> roles;
     /**
-     * 角色
+     * 创建时间
      */
-    private Integer role;
+    private Date createtime;
+    /**
+     * 更新时间
+     */
+    private Date updatetime;
 }

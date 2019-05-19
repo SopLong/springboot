@@ -1,10 +1,9 @@
-package com.example.backdemo.service.impl;
+package com.example.backdemo.service.impl.system;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.example.backdemo.mapper.SysUserMapper;
-import com.example.backdemo.pojo.SysUser;
-import com.example.backdemo.service.SysUserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.example.backdemo.mapper.system.SysUserMapper;
+import com.example.backdemo.pojo.system.SysUser;
+import com.example.backdemo.service.system.SysUserService;
 import org.springframework.stereotype.Service;
 
 /**

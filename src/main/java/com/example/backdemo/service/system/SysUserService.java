@@ -1,6 +1,6 @@
-package com.example.backdemo.service;
+package com.example.backdemo.service.system;
 
-import com.example.backdemo.pojo.SysUser;
+import com.example.backdemo.pojo.system.SysUser;
 import com.baomidou.mybatisplus.service.IService;
 
 /**

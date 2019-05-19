@@ -1,9 +1,9 @@
-package com.example.backdemo.controller;
+package com.example.backdemo.controller.system;
 
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.example.backdemo.pojo.SysUser;
-import com.example.backdemo.service.SysUserService;
+import com.example.backdemo.pojo.system.SysUser;
+import com.example.backdemo.service.system.SysUserService;
 import com.example.backdemo.utils.IMoocJSONResult;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,10 +11,8 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
-import org.springframework.stereotype.Controller;
-
-import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -52,14 +50,12 @@ public class SysUserController {
         return new IMoocJSONResult();
     }
 
-    @GetMapping("findAll")
+    @PostMapping("getList")
     @Transactional(propagation = Propagation.SUPPORTS)
-    public IMoocJSONResult findAll(){
+    public IMoocJSONResult getList(Map<String,Object> map){
         //分页的实现
         PageHelper.startPage(1,20);
-
-        List<SysUser> sysUsers = sysUserService.selectList(new EntityWrapper<SysUser>());
-        return new IMoocJSONResult();
+        return new IMoocJSONResult(sysUserService.selectList(new EntityWrapper<SysUser>()));
     }
 }
 

@@ -1,10 +1,9 @@
-package com.example.backdemo.controller;
+package com.example.backdemo.controller.login;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.example.backdemo.pojo.SysUser;
-import com.example.backdemo.service.SysUserService;
+import com.example.backdemo.pojo.system.SysUser;
+import com.example.backdemo.service.system.SysUserService;
 import com.example.backdemo.utils.IMoocJSONResult;
-import jdk.nashorn.internal.parser.Token;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -12,15 +11,10 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
-import org.apache.shiro.session.SessionException;
 import org.apache.shiro.subject.Subject;
-import org.apache.shiro.web.filter.authc.LogoutFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.transaction.SystemException;
 import java.util.HashMap;
 import java.util.Map;

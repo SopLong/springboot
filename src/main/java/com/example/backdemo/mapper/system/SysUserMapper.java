@@ -1,7 +1,7 @@
-package com.example.backdemo.mapper;
+package com.example.backdemo.mapper.system;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.example.backdemo.pojo.SysUser;
+import com.example.backdemo.pojo.system.SysUser;
 
 /**
  * <p>
