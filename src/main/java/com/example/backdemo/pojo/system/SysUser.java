@@ -1,6 +1,7 @@
 package com.example.backdemo.pojo.system;
 
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
@@ -48,4 +49,6 @@ public class SysUser implements Serializable {
      * 更新时间
      */
     private Date updatetime;
+    @TableField(exist = false)
+    private String token;
 }

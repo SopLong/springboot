@@ -1,4 +1,4 @@
-package com.example.backdemo.config;
+package com.example.backdemo.config.mybatis;
 
 import com.baomidou.mybatisplus.plugins.PerformanceInterceptor;
 import org.mybatis.spring.annotation.MapperScan;

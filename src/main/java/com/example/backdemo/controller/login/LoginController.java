@@ -13,11 +13,13 @@ import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.SystemException;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +29,8 @@ public class LoginController{
     SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private RedisTemplate redisTemplate = new RedisTemplate();
 
     @PostMapping("login")
     public ResultData login(SysUser sysUser) throws SystemException {
@@ -38,11 +42,13 @@ public class LoginController{
             }else{
                 simpleAccountRealm.addAccount(user.getUserName(),user.getPassword());
             }
+            redisTemplate.opsForValue().set("hello","redis");
             DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
             defaultSecurityManager.setRealm(simpleAccountRealm);
             // 2、主体提交认证请求
             SecurityUtils.setSecurityManager(defaultSecurityManager);
             Subject subject = SecurityUtils.getSubject();
+            Serializable id = subject.getSession().getId();
             UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(),sysUser.getPassword());
             subject.login(token);
             Map<String,Object> map = new HashMap<>();
