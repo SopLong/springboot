@@ -1,12 +1,13 @@
 package com.example.backdemo.pojo.system;
 
-import java.util.Date;
-
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @TableName("users")

@@ -1,9 +1,9 @@
 package com.example.backdemo.controller.login;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.example.backdemo.pojo.system.ResultData;
 import com.example.backdemo.pojo.system.SysUser;
 import com.example.backdemo.service.system.SysUserService;
-import com.example.backdemo.utils.IMoocJSONResult;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.DisabledAccountException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
@@ -13,7 +13,9 @@ import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.SystemException;
 import java.util.HashMap;
@@ -27,8 +29,8 @@ public class LoginController{
     private SysUserService sysUserService;
 
     @PostMapping("login")
-    public IMoocJSONResult login(SysUser sysUser) throws SystemException {
-        IMoocJSONResult iMoocJSONResult = new IMoocJSONResult();
+    public ResultData login(SysUser sysUser) throws SystemException {
+        ResultData resultData = new ResultData();
         try {
             SysUser user = sysUserService.selectOne(new EntityWrapper<SysUser>().eq("user_name", sysUser.getUserName()));
             if(null == user){
@@ -46,26 +48,25 @@ public class LoginController{
             Map<String,Object> map = new HashMap<>();
             map.put("token",token);
             map.put("user",user);
-            iMoocJSONResult.setData(map);
-            iMoocJSONResult.setOk(true);
-            return iMoocJSONResult;
+            resultData.setData(map);
+            return resultData;
         } catch (DisabledAccountException e) {
-            iMoocJSONResult.setMsg("账号为禁用状态");
-            iMoocJSONResult.setOk(false);
-            return iMoocJSONResult;
+            resultData.setMsg("账号为禁用状态");
+            resultData.setSuccess(false);
+            return resultData;
         } catch (IncorrectCredentialsException e) {
-            iMoocJSONResult.setMsg("密码错误");
-            iMoocJSONResult.setOk(false);
-            return iMoocJSONResult;
+            resultData.setMsg("密码错误");
+            resultData.setSuccess(false);
+            return resultData;
         } catch (UnknownAccountException e) {
-            iMoocJSONResult.setMsg("账号不存在");
-            iMoocJSONResult.setOk(false);
-            return iMoocJSONResult;
+            resultData.setMsg("账号不存在");
+            resultData.setSuccess(false);
+            return resultData;
         }
     }
 
     @PostMapping("logout")
-    public IMoocJSONResult logout(SysUser sysUser) throws SystemException {
+    public ResultData logout(SysUser sysUser) throws SystemException {
         try {
             simpleAccountRealm.addAccount(sysUser.getUserName(),sysUser.getPassword());
             DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
@@ -73,9 +74,9 @@ public class LoginController{
             SecurityUtils.setSecurityManager(defaultSecurityManager);
             Subject subject = SecurityUtils.getSubject();
             subject.logout();
-            IMoocJSONResult iMoocJSONResult = new IMoocJSONResult();
-            iMoocJSONResult.setOk(true);
-            return iMoocJSONResult;
+            ResultData resultData = new ResultData();
+            resultData.setSuccess(true);
+            return resultData;
         }catch (Exception e){
             throw new SystemException("登出失败!");
         }
