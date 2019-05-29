@@ -1,14 +1,12 @@
 package com.example.backdemo.controller.login;
 
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.example.backdemo.controller.system.BaseController;
 import com.example.backdemo.pojo.system.ResultData;
 import com.example.backdemo.pojo.system.SysUser;
 import com.example.backdemo.service.system.SysUserService;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.DisabledAccountException;
-import org.apache.shiro.authc.IncorrectCredentialsException;
-import org.apache.shiro.authc.UnknownAccountException;
-import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authc.*;
 import org.apache.shiro.mgt.DefaultSecurityManager;
 import org.apache.shiro.realm.SimpleAccountRealm;
 import org.apache.shiro.subject.Subject;
@@ -25,50 +23,28 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("/loginController")
-public class LoginController{
+public class LoginController extends BaseController {
     SimpleAccountRealm simpleAccountRealm = new SimpleAccountRealm();
-    @Autowired
-    private SysUserService sysUserService;
-    @Autowired
-    private RedisTemplate redisTemplate = new RedisTemplate();
 
     @PostMapping("login")
     public ResultData login(SysUser sysUser) throws SystemException {
         ResultData resultData = new ResultData();
         try {
-            SysUser user = sysUserService.selectOne(new EntityWrapper<SysUser>().eq("user_name", sysUser.getUserName()));
-            if(null == user){
-                throw new SystemException("账号不存在!");
-            }else{
-                simpleAccountRealm.addAccount(user.getUserName(),user.getPassword());
-            }
-            redisTemplate.opsForValue().set("hello","redis");
-            DefaultSecurityManager defaultSecurityManager = new DefaultSecurityManager();
-            defaultSecurityManager.setRealm(simpleAccountRealm);
-            // 2、主体提交认证请求
-            SecurityUtils.setSecurityManager(defaultSecurityManager);
-            Subject subject = SecurityUtils.getSubject();
-            Serializable id = subject.getSession().getId();
-            UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(),sysUser.getPassword());
+            Subject subject = (Subject) SecurityUtils.getSubject().getPrincipal();
+            UsernamePasswordToken token = new UsernamePasswordToken(sysUser.getUserName(), sysUser.getPassword());
             subject.login(token);
-            Map<String,Object> map = new HashMap<>();
-            map.put("token",token);
-            map.put("user",user);
-            resultData.setData(map);
-            return resultData;
-        } catch (DisabledAccountException e) {
-            resultData.setMsg("账号为禁用状态");
-            resultData.setSuccess(false);
-            return resultData;
+            String authorization = (String) subject.getSession().getId();
+            resultData.setSuccess(true);
+            resultData.setData(authorization); //将authorization传给前端，用于MySessionManager中请求的验证
+            resultData.setMsg("登陆成功");
         } catch (IncorrectCredentialsException e) {
             resultData.setMsg("密码错误");
-            resultData.setSuccess(false);
-            return resultData;
-        } catch (UnknownAccountException e) {
-            resultData.setMsg("账号不存在");
-            resultData.setSuccess(false);
-            return resultData;
+        } catch (LockedAccountException e) {
+            resultData.setMsg("该用户已被禁用");
+        } catch (AuthenticationException e) {
+            resultData.setMsg("该用户不存在");
         }
+        return resultData;
     }
 
     @PostMapping("logout")
